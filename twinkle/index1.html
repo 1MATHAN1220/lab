@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacker AI Dance Floor with Twinkle Code</title>
+
+<!-- Lottie Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Twinkle Code canvas */
+#twinkleCanvas {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+/* Glass UI Overlay */
+.ui-overlay {
+    position:absolute;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 20px 40px;
+    color: #0ff;
+    text-align: center;
+    box-shadow: 0 0 40px #0ff;
+    z-index:10;
+}
+
+/* Get Code Button */
+#getCodeBtn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    font-size: 16px;
+    color: #0ff;
+    background: rgba(0,0,0,0.5);
+    border: 2px solid #0ff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#getCodeBtn:hover {
+    background: #0ff;
+    color: #000;
+    box-shadow: 0 0 20px #0ff;
+}
+
+/* Hacker AI Dance container */
+.hacker-container {
+    position:relative;
+    width:90%;
+    max-width:1200px;
+    display:flex;
+    justify-content: space-around;
+    align-items:flex-end;
+    z-index:5;
+}
+
+/* Each AI character */
+.hacker-character {
+    width:200px;
+    height:200px;
+    filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 40px #0ff);
+    transition: transform 0.3s;
+}
+.hacker-character:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Responsive adjustments */
+@media(max-width:900px){
+    .hacker-container{
+        flex-wrap:wrap;
+        gap:15px;
+    }
+    .hacker-character{
+        width:150px;
+        height:150px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Twinkle code canvas -->
+<canvas id="twinkleCanvas"></canvas>
+
+<!-- Glass overlay -->
+<div class="ui-overlay">
+    <h1>💻 WELCOME TO TWINKLE CODING</h1>
+    <p>Twinkle code flowing, cyberpunk vibes 🎵</p>
+    <button id="getCodeBtn">Get Code</button>
+</div>
+
+<!-- Hacker characters -->
+<div class="hacker-container">
+    <div class="hacker-character" id="hacker1"></div>
+    <div class="hacker-character" id="hacker2"></div>
+    <div class="hacker-character" id="hacker3"></div>
+    <div class="hacker-character" id="hacker4"></div>
+    <div class="hacker-character" id="hacker5"></div>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" autoplay loop></audio>
+
+<script>
+// ===== Lottie hacker AI animations =====
+const hackers = [
+    {id:'hacker1', path:'https://assets3.lottiefiles.com/packages/lf20_6upfktk1.json'},
+    {id:'hacker2', path:'https://assets3.lottiefiles.com/packages/lf20_qrjvzyh0.json'},
+    {id:'hacker3', path:'https://assets3.lottiefiles.com/packages/lf20_u4yrau.json'},
+    {id:'hacker4', path:'https://assets3.lottiefiles.com/packages/lf20_6upfktk1.json'},
+    {id:'hacker5', path:'https://assets3.lottiefiles.com/packages/lf20_qrjvzyh0.json'}
+];
+
+hackers.forEach(h=>{
+    lottie.loadAnimation({
+        container: document.getElementById(h.id),
+        renderer:'svg',
+        loop:true,
+        autoplay:true,
+        path:h.path
+    });
+});
+
+// ===== Beat synced animation =====
+const music = document.getElementById('bgMusic');
+setInterval(()=>{
+    const scale = 1 + 0.05 * Math.sin(Date.now()/150);
+    document.querySelectorAll('.hacker-character').forEach(el=>{
+        el.style.transform=`scale(${scale})`;
+    });
+},50);
+
+// ===== Twinkle Code effect =====
+const canvas = document.getElementById('twinkleCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+const fontSize = 18;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = [];
+for(let i=0;i<columns;i++) drops[i] = Math.random()*canvas.height;
+
+function draw(){
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.font = fontSize+'px monospace';
+
+    for(let i=0;i<drops.length;i++){
+        const text = letters.charAt(Math.floor(Math.random()*letters.length));
+        const x = i*fontSize;
+        const y = drops[i];
+        const colors = ['#0ff','#0f0','#0fa','#0fc','#0f8'];
+        ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+        ctx.fillText(text,x,y);
+
+        drops[i] += fontSize;
+        if(drops[i] > canvas.height || Math.random()>0.975) drops[i] = 0;
+    }
+}
+setInterval(draw,50);
+
+window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// ===== Get Code Button Navigation =====
+document.getElementById('getCodeBtn').addEventListener('click', ()=>{
+    window.location.href = 'index2.html';
+});
+</script>
+
+</body>
+</html>
