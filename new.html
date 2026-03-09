@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Online Python Compiler</title>
+
+<style>
+body{
+font-family:Arial;
+background:#1e1e1e;
+color:white;
+text-align:center;
+}
+
+h1{
+color:#00ff9c;
+}
+
+textarea{
+width:80%;
+height:250px;
+background:#111;
+color:#00ff9c;
+font-size:16px;
+padding:10px;
+border:1px solid #444;
+}
+
+button{
+padding:10px 25px;
+font-size:18px;
+background:#00c853;
+border:none;
+color:white;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#009624;
+}
+
+pre{
+background:black;
+color:#00ff9c;
+width:80%;
+margin:auto;
+padding:15px;
+text-align:left;
+min-height:100px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Online Python Compiler</h1>
+
+<textarea id="code">
+print("Hello World")
+</textarea>
+
+<br>
+
+<button onclick="runPython()">Run Code</button>
+
+<h3>Output</h3>
+
+<pre id="output"></pre>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+
+<script>
+
+let pyodideReady = loadPyodide();
+
+async function runPython(){
+
+let pyodide = await pyodideReady;
+
+let code = document.getElementById("code").value;
+
+try{
+
+let result = pyodide.runPython(code);
+
+document.getElementById("output").textContent = result ?? "Code Executed";
+
+}
+
+catch(err){
+
+document.getElementById("output").textContent = err;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

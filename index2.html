@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dancing AI Party</title>
+
+<!-- Lottie Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
+<style>
+/* Full Page Setup */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: url('bg3.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Glass UI Overlay */
+.ui-overlay {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 20px 40px;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,255,255,0.5);
+    z-index: 10;
+}
+
+/* Buttons Container */
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Buttons */
+.button-container button {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0ff;
+    background: rgba(0,0,0,0.5);
+    border: 2px solid #0ff;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.button-container button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
+}
+
+/* Dancing AI container */
+.dance-container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+/* Each AI character */
+.ai-character {
+    width: 200px;
+    height: 200px;
+    filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 40px #0ff);
+    transition: transform 0.3s;
+}
+.ai-character:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Responsive adjustments */
+@media(max-width:800px){
+    .dance-container {
+        flex-wrap: wrap;
+    }
+    .ai-character {
+        width: 150px;
+        height: 150px;
+        margin: 10px;
+    }
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .button-container button {
+        width: 160px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="ui-overlay">
+    <h1>🤖Twinkle dance party!!!!!!</h1>
+    <p>Enjoy the dance and music 🎵</p>
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <button onclick="location.href='index3.html'">DATA STRUCTURE</button>
+        <button onclick="location.href='index4.html'">CYBER SECURITY</button>
+        <button onclick="location.href='index5.html'">IOT</button>
+        <button onclick="location.href='index6.html'">BLANK</button>
+    </div>
+</div>
+
+<div class="dance-container">
+    <div class="ai-character" id="ai1"></div>
+    <div class="ai-character" id="ai2"></div>
+    <div class="ai-character" id="ai3"></div>
+    <div class="ai-character" id="ai4"></div>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
+
+<script>
+// AI Characters Lottie Animations
+const animations = [
+    {id:'ai1', path:'https://assets7.lottiefiles.com/packages/lf20_0yfsb3a1.json'},
+    {id:'ai2', path:'https://assets3.lottiefiles.com/packages/lf20_touohxv0.json'},
+    {id:'ai3', path:'https://assets7.lottiefiles.com/packages/lf20_0yfsb3a1.json'},
+    {id:'ai4', path:'https://assets3.lottiefiles.com/packages/lf20_touohxv0.json'}
+];
+
+animations.forEach(anim=>{
+    lottie.loadAnimation({
+        container: document.getElementById(anim.id),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: anim.path
+    });
+});
+
+// Optional: sync animation scale with music beat
+const music = document.getElementById('bgMusic');
+setInterval(()=>{
+    const scale = 1 + 0.05 * Math.sin(Date.now()/200);
+    document.querySelectorAll('.ai-character').forEach(el=>{
+        el.style.transform = `scale(${scale})`;
+    });
+},50);
+</script>
+
+</body>
+</html>
